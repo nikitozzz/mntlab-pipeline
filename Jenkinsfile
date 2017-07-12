@@ -37,7 +37,7 @@ stage ' Triggering job and fetching artifacts'
 
 	build job: 'MNTLAB-aaksionkin-child1-build-job', parameters: [string(name: 'BRANCH_NAME', value: 'aaksionkin')], wait: true
 	step([$class: 'CopyArtifact',
-	  projectName: "EPBYMINW3088/MNTLAB-aaksionkin-child1-build-job",
+	  projectName: "MNTLAB-aaksionkin-child1-build-job",
 	  filter: '*.tar.gz']);
 
 	wrap([$class: 'TimestamperBuildWrapper']) {
