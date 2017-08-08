@@ -1,5 +1,6 @@
 node(env.SLAVE) 
 	{
+	env.gradle='/opt/gradle/gradle-4.1/bin/gradle'
     env.student='nzubkov'
     stage('Checkout code from repo') 
 		{
