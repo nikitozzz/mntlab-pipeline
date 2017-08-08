@@ -2,6 +2,7 @@ node(env.SLAVE)
 	{
 	//env.gradle='/opt/gradle/gradle-4.1/bin/gradle'
     env.student='nzubkov'
+	//env.datestamp='$(date +%F)'
     stage('Checkout code from repo') 
 		{
 			checkout([
@@ -51,8 +52,8 @@ node(env.SLAVE)
     stage('Packaging and Publishing results') 
 		{
 			sh 'tar xvf nzubkov_dsl_script.tar.gz'
-			sh 'tar zvfc pipeline-${student}-${BUILD_NUMBER}-$(date +%F).tar.gz jobs.groovy Jenkinsfile -C build/libs/ gradle-simple.jar'
-			archiveArtifacts artifacts: 'pipeline-'+student+'-${BUILD_NUMBER}-$(date +%F).tar.gz', allowEmptyArchive: false
+			sh 'tar zvfc pipeline-${student}-${BUILD_NUMBER}.tar.gz jobs.groovy Jenkinsfile -C build/libs/ gradle-simple.jar'
+			archiveArtifacts artifacts: 'pipeline-'+student+'-${BUILD_NUMBER}.tar.gz', allowEmptyArchive: false
 		}
     stage('Asking for manual approval') 
 		{
@@ -63,7 +64,7 @@ node(env.SLAVE)
 		}
 	stage ('Deployment artefact')
 		{
-			sh 'curl -v -u admin:admin123 --upload-file pipeline-${student}-${BUILD_NUMBER}-$(date +%F).tar.gz http://localhost:8081/nexus/content/repositories/releases/'+student+'-${BUILD_NUMBER}-$(date +%F).tar.gz'
+			sh 'curl -v -u admin:admin123 --upload-file pipeline-${student}-${BUILD_NUMBER}.tar.gz http://localhost:8081/nexus/content/repositories/releases/'+student+'-${BUILD_NUMBER}.tar.gz'
 		}
     stage('Deployment') 
 		{
