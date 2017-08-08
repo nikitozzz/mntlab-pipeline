@@ -53,13 +53,18 @@ node(env.SLAVE)
 			sh 'tar xvf nzubkov_dsl_script.tar.gz'
 			sh 'tar zvfc pipeline-${student}-${BUILD_NUMBER}-$(date +%F).tar.gz jobs.groovy Jenkinsfile -C build/libs/ gradle-simple.jar'
 			archiveArtifacts artifacts: 'pipeline-'+student+'-${BUILD_NUMBER}-$(date +%F).tar.gz', allowEmptyArchive: false
-			sh 'curl -v -u admin:admin123 --upload-file pipeline-${student}-${BUILD_NUMBER}-$(date +%F).tar.gz http://localhost:8081/nexus/content/repositories/releases/'+student+'-${BUILD_NUMBER}-$(date +%F).tar.gz'
 		}
     stage('Asking for manual approval') 
-		
-			{
-				message 'Approve deployment?'
-			}
+		{
+			timeout(time:10, unit:'SECONDS')
+				{
+					input 'Approve deployment artefact?'
+				}
+		}
+	stage ('Deployment artefact')
+		{
+			sh 'curl -v -u admin:admin123 --upload-file pipeline-${student}-${BUILD_NUMBER}-$(date +%F).tar.gz http://localhost:8081/nexus/content/repositories/releases/'+student+'-${BUILD_NUMBER}-$(date +%F).tar.gz'
+		}
     stage('Deployment') 
 		{
 			sh 'java -jar build/libs/gradle-simple.jar'
