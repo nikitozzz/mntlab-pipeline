@@ -1,6 +1,6 @@
 node(env.SLAVE) 
 	{
-	env.gradle='/opt/gradle/gradle-4.1/bin/gradle'
+	//env.gradle='/opt/gradle/gradle-4.1/bin/gradle'
     env.student='nzubkov'
     stage('Checkout code from repo') 
 		{
@@ -14,7 +14,8 @@ node(env.SLAVE)
 				])
         }
     stage('Building code') 
-		{
+		{	
+			sh "gradle -v"
 			sh "gradle build"
 		}
     stage('Testing code') 
