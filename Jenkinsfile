@@ -1,6 +1,5 @@
 node(env.SLAVE) {
-    env.student='kamyshev'
-    //customWorkspace '/opt/jenkins/master/workspace/customWorkspace'
+    env.student='nzubkov'
     stage('Preparation(Checking out)') {
         checkout([$class: 'GitSCM', branches: [[name: '*/kamyshev']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/PavelKamyshev/mntlab-pipeline.git']]])
         }
@@ -27,11 +26,11 @@ node(env.SLAVE) {
         )
     }
     stage('Triggering job and fetching artifact after finishing') {
-        build job: 'EPRURYAW0380-MNTLAB-kamyshev-child1-build-job', parameters: [[$class: 'StringParameterValue', name: 'BRANCH_NAME', value: 'kamyshev']]
-        step([$class: 'CopyArtifact', filter: 'kamyshev_dsl_script.tar.gz	', fingerprintArtifacts: true, flatten: true, projectName: 'EPRURYAW0380-MNTLAB-kamyshev-child1-build-job', target: ''])
+        build job: 'EPRURYAW0380-MNTLAB-zubkov-child1-build-job', parameters: [[$class: 'StringParameterValue', name: 'BRANCH_NAME', value: 'nzubkov']]
+        step([$class: 'CopyArtifact', filter: 'nzubkov_dsl_script.tar.gz	', fingerprintArtifacts: true, flatten: true, projectName: 'EPRURYAW0380-MNTLAB-zubkov-child1-build-job', target: ''])
     }
     stage('Packaging and Publishing results') {
-        /*a)*/ sh 'tar xvf kamyshev_dsl_script.tar.gz'
+        /*a)*/ sh 'tar xvf nzubkov_dsl_script.tar.gz'
         /*b)*/ sh 'tar zvfc pipeline-${student}-${BUILD_NUMBER}.tar.gz jobs.groovy Jenkinsfile -C build/libs/ gradle-simple.jar'
         /*c)*/ archiveArtifacts artifacts: 'pipeline-'+student+'-${BUILD_NUMBER}.tar.gz', allowEmptyArchive: false
         /*d)*/ sh 'curl -v -u admin:admin123 --upload-file pipeline-${student}-${BUILD_NUMBER}.tar.gz http://localhost/nexus/content/repositories/releases/'+student+'-${BUILD_NUMBER}.tar.gz'
