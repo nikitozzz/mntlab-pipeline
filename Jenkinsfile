@@ -51,7 +51,7 @@ node(env.SLAVE)
     stage('Packaging and Publishing results') 
 		{
 			sh 'tar xvf nzubkov_dsl_script.tar.gz'
-			sh 'tar zvfc pipeline-${student}-${BUILD_NUMBER}-$(date +%F).tar.gz jobs.groovy Jenkinsfile -C build/libs/ gradle-simple.jar'
+			sh 'tar zvfc pipeline-${student}-${BUILD_NUMBER}.tar.gz jobs.groovy Jenkinsfile -C build/libs/ gradle-simple.jar'
 			archiveArtifacts artifacts: 'pipeline-'+student+'-${BUILD_NUMBER}-$(date +%F).tar.gz', allowEmptyArchive: false
 		}
     stage('Asking for manual approval') 
