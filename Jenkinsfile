@@ -16,7 +16,7 @@ node(env.SLAVE)
     stage('Building code') 
 		{	
 			sh "/opt/gradle/gradle-4.1/bin/gradle -v"
-			sh "gradle build"
+			sh "/opt/gradle/gradle-4.1/bin/gradle build"
 		}
     stage('Testing code') 
 		{
@@ -24,21 +24,21 @@ node(env.SLAVE)
 				{
 					stage ('Unit Tests') 
 						{
-							sh "gradle test"
+							sh "/opt/gradle/gradle-4.1/bin/gradle test"
 						}		
 				},
 					jacocoTests: 
 						{
 							stage('Jacoco Tests') 
 								{
-									sh "gradle jacocoTestReport"
+									sh "/opt/gradle/gradle-4.1/bin/gradle jacocoTestReport"
 								}
 						},
 					cucumberTests: 
 						{
 							stage('Cucumber Tests') 
 								{
-									sh "gradle cucumber"
+									sh "/opt/gradle/gradle-4.1/bin/gradle cucumber"
 								}
 						}
 			)
