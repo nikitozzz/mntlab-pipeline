@@ -52,8 +52,8 @@ node(env.SLAVE)
 		{
 			/*a)*/ sh 'tar xvf nzubkov_dsl_script.tar.gz'
 			/*b)*/ sh 'tar zvfc pipeline-${student}-${BUILD_NUMBER}-$(date +%F).tar.gz jobs.groovy Jenkinsfile -C build/libs/ gradle-simple.jar'
-			/*c)*/ archiveArtifacts artifacts: 'pipeline-'+student+'-${BUILD_NUMBER}.tar.gz', allowEmptyArchive: false
-			/*d)*/ sh 'curl -v -u admin:admin123 --upload-file pipeline-${student}-${BUILD_NUMBER}.tar.gz http://localhost:8081/nexus/content/repositories/releases/'+student+'-${BUILD_NUMBER}.tar.gz'
+			/*c)*/ archiveArtifacts artifacts: 'pipeline-'+student+'-${BUILD_NUMBER}-$(date +%F).tar.gz', allowEmptyArchive: false
+			/*d)*/ sh 'curl -v -u admin:admin123 --upload-file pipeline-${student}-${BUILD_NUMBER}-$(date +%F).tar.gz http://localhost:8081/nexus/content/repositories/releases/'+student+'-${BUILD_NUMBER}-$(date +%F).tar.gz'
 		}
     stage('Asking for manual approval') 
 		{
