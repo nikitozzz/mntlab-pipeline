@@ -46,11 +46,11 @@ node(env.SLAVE)
     stage('Triggering job and fetching artifact after finishing') 
 		{
 			build job: 'EPRURYAW0380-MNTLAB-zubkov-child1-build-job', parameters: [[$class: 'StringParameterValue', name: 'BRANCH_NAME', value: 'nzubkov']]
-			step([$class: 'CopyArtifact', filter: 'zubkov_dsl_script.tar.gz	', fingerprintArtifacts: true, flatten: true, projectName: 'EPRURYAW0380-MNTLAB-zubkov-child1-build-job', target: ''])
+			step([$class: 'CopyArtifact', filter: 'nzubkov_dsl_script.tar.gz	', fingerprintArtifacts: true, flatten: true, projectName: 'EPRURYAW0380-MNTLAB-zubkov-child1-build-job', target: ''])
 		}
     stage('Packaging and Publishing results') 
 		{
-			sh 'tar xvf zubkov_dsl_script.tar.gz'
+			sh 'tar xvf nzubkov_dsl_script.tar.gz'
 			sh 'tar zvfc pipeline-${student}-${BUILD_NUMBER}-$(date +%F).tar.gz jobs.groovy Jenkinsfile -C build/libs/ gradle-simple.jar'
 			archiveArtifacts artifacts: 'pipeline-'+student+'-${BUILD_NUMBER}-$(date +%F).tar.gz', allowEmptyArchive: false
 		}
