@@ -58,7 +58,7 @@ node(env.SLAVE)
     stage('Asking for manual approval') 
 		
 			{
-				input 'Approve deployment?'
+				message 'Approve deployment?'
 			}
     stage('Deployment') 
 		{
